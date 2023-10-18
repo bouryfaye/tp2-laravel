@@ -52,10 +52,10 @@ Route::get('/blog-edit/{blogPost}', [BlogPostController::class, 'edit'])->name('
 Route::put('/blog-edit/{blogPost}', [BlogPostController::class, 'update']);
 Route::delete('/blog-edit/{blogPost}', [BlogPostController::class, 'destroy'])->name('blog.delete');
 
-Route::get('upload', [UploadController::class, 'index'])->name('upload.index');
-Route::get('/upload-create', [UploadController::class, 'create'])->name('upload.create');
+Route::get('upload', [UploadController::class, 'index'])->name('upload.index')->middleware(('auth'));
+Route::get('/upload-create', [UploadController::class, 'create'])->name('upload.create')->middleware(('auth'));
 Route::post('upload-create', [UploadController::class, 'store'])->name('upload.store');
-Route::get('/upload/{file}', [UploadController::class, 'show'])->name('upload.show');
+Route::get('/upload/{file}', [UploadController::class, 'show'])->name('upload.show')->middleware(('auth'));
 Route::get('/upload-edit/{file}', [UploadController::class, 'edit'])->name('upload.edit');
 Route::put('/upload-edit/{file}', [UploadController::class, 'update']);
 Route::delete('/upload-edit/{file}', [UploadController::class, 'destroy'])->name('upload.delete');

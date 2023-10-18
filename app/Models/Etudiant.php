@@ -20,6 +20,17 @@ class Etudiant extends Model
         'phone',
         'email',
         'dateNaissance',
-        'ville_id'
+        'ville_id',
+        'user_id'
     ];
+
+    
+    public function blogHasVille() {
+        return $this->hasOne('App\Models\Ville', 'id', 'ville_id'); 
+    }
+
+    public function blogHasUser() {
+        return $this->hasOne('App\Models\User', 'id', 'user_id'); 
+    }
+
 }

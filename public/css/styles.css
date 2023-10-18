@@ -2,6 +2,7 @@
 *{
   box-sizing: border-box;
 }
+
 a {
   color: var(--bs-link-color);
   text-decoration: underline;
@@ -127,7 +128,7 @@ form label, .card-header {
   background:  url("../../assets/img/bibliotheque.jpg");
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: scroll;
+  background-attachment: fixed;
   background-size: cover;
 }
 
@@ -135,9 +136,13 @@ form label, .card-header {
   color: white;
 }
 .row h1 {
-  padding-top: 2rem;
+  margin-top: 5rem;
   color: black;
   background-color: white;
+}
+.welcome {
+  background-color: white;
+  width: 50%;
 }
 @media (min-width: 768px) {
   .masthead h1, .masthead .h1 {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Etudiant;
 use App\Models\Ville;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EtudiantController extends Controller
 {
@@ -14,11 +15,14 @@ class EtudiantController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $etudiant = Etudiant::Select()
-        ->paginate(15); //5 données par page
-
-        return view('etudiant.index', ['etudiants' => $etudiant]);
+    { 
+        if (Auth::check()) {
+            $etudiant = Etudiant::Select()
+            ->paginate(10); //5 données par page
+            return view('etudiant.index', ['etudiants' => $etudiant]);
+        } else {
+            return redirect(route('login'));
+        }
     }
 
     /**
@@ -47,9 +51,11 @@ class EtudiantController extends Controller
             'email'         => $request->email,
             'dateNaissance' => $request->dateNaissance,
             'ville_id'      => $request->ville_id,
+            'user_id'       => Auth::user()->id,
         ]);
 
-        return $newStudent;
+        //return $newStudent;
+        return redirect(route('etudiant.index'))->withSuccess(trans('lang.text_student_insert'));
     }
 
 
@@ -71,9 +77,12 @@ class EtudiantController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Etudiant $etudiant)
-    {
-        $villes = Ville::all();
-        return view('etudiant.edit', ['villes' => $villes, 'etudiant' => $etudiant]);
+    {   if(Auth::user()->id === $etudiant->user_id) {
+            $villes = Ville::all();
+            return view('etudiant.edit', ['villes' => $villes, 'etudiant' => $etudiant]);
+        } else {
+            return redirect(route('etudiant.index', $etudiant->id))->withSuccess('Accès refusé');
+        }
     }
 
     /**
@@ -105,9 +114,21 @@ class EtudiantController extends Controller
      */
     public function destroy(Etudiant $etudiant)
     {
+        if(Auth::user()->id === $etudiant->user_id) {
         $etudiant->delete();
 
         return redirect(route('etudiant.index'))->withSuccess("L'enregistrement de cet étudiant a bien été supprimée !");
+        } else {
+            return redirect(route('etudiant.index', $etudiant->id))->withSuccess('Accès refusé');
+        }
+    }
+
+    public function pagination()
+    {
+        $etudiant = Etudiant::Select()
+            ->paginate(5); //5 données par page
+
+        return view('etudiant.index', ['etudiants' => $etudiant]);
     }
 
 }

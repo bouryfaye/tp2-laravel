@@ -115,7 +115,7 @@ form label, .card-header {
   color: white;
 }
 .show , .card-body, tbody{
-  background-color: black;
+  background-color: red;
   color: white;
 }
 
@@ -128,7 +128,7 @@ form label, .card-header {
   background:  url("../../assets/img/bibliotheque.jpg");
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: scroll;
+  background-attachment: fixed;
   background-size: cover;
 }
 
@@ -138,6 +138,14 @@ form label, .card-header {
 .row h1 {
   color: black;
   background-color: white;
+}
+
+.card-header h4 {
+  color: red;
+}
+.welcome {
+  background-color: white;
+  width: 50%;
 }
 @media (min-width: 768px) {
   .masthead h1, .masthead .h1 {
